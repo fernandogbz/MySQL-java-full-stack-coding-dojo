@@ -1,0 +1,8 @@
+INSERT INTO users(id, first_name, last_name, handle)
+VALUES (6, "Allen", "Carter", "fassfsa")
+
+UPDATE users
+SET first_name = "xd"
+WHERE id = 6
+
+DELETE * FROM users WHERE id = 6

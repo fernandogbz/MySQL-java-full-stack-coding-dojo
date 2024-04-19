@@ -1,0 +1,35 @@
+(1)
+SELECT city.city_id, city, first_name, last_name, email, address FROM city JOIN address JOIN customer
+WHERE city.city_id = 312 AND city.city_id = address.city_id AND address.address_id = customer.address_id
+
+(2)
+SELECT film.film_id, title, description, release_year, rating, special_features, category.name AS genre FROM category JOIN film JOIN film_category
+WHERE category.name LIKE "Comedy" AND category.category_id = film_category.category_id AND film_category.film_id = film.film_id
+
+(3)
+SELECT actor.actor_id, CONCAT(actor.first_name, " ", actor.last_name) AS actor_name, film.film_id, title, description, release_year 
+FROM film JOIN film_actor JOIN actor
+WHERE film_actor.actor_id = 5 AND film_actor.film_id = film.film_id AND actor.actor_id = 5
+
+(4)
+SELECT store_id, city_id, first_name, last_name, email, address FROM customer JOIN address 
+WHERE store_id = 1 AND city_id IN (1, 42, 312, 459) AND address.address_id = customer.address_id 
+
+(5)
+SELECT title, description, release_year, rating, special_features FROM film JOIN film_actor
+WHERE film_actor.actor_id = 15 AND film_actor.film_id = film.film_id AND rating LIKE "G" AND special_features LIKE "%Behind the scenes%"
+
+(6)
+SELECT film.film_id, title, actor.actor_id, CONCAT(first_name, " ", last_name) FROM actor JOIN film JOIN film_actor
+WHERE actor.actor_id = film_actor.actor_id AND film.film_id = film_actor.film_id AND film.film_id = 369
+
+(7)
+SELECT film.film_id, title, description, release_year, rating, special_features, name, rental_rate
+FROM film JOIN film_category JOIN category
+WHERE film.film_id = film_category.film_id AND film_category.category_id = category.category_id AND rental_rate = 2.99 AND name LIKE "Drama"
+
+(8)
+SELECT actor.actor_id, CONCAT(first_name, " ", last_name), film.film_id, title, description, release_year, rating, special_features, name
+FROM actor JOIN film_actor JOIN film_category JOIN film JOIN category
+WHERE first_name LIKE "SANDRA" AND last_name LIKE "KILMER" AND actor.actor_id = film_actor.actor_id AND film.film_id = film_actor.film_id
+AND film.film_id = film_category.film_id AND film_category.category_id = category.category_id AND name LIKE "Action"

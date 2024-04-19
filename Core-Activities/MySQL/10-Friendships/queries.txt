@@ -1,0 +1,57 @@
+(1)
+SELECT users.first_name, users.last_name, users2.first_name AS friend_first_name, users2.last_name AS friend_last_name FROM users 
+JOIN friendships JOIN users AS users2 WHERE users.id = friendships.user_id AND friendships.friend_id = users2.id;
+
+EJERCICIO ADICIONAL
+(1)
+SELECT users.first_name, users.last_name FROM users JOIN friendships JOIN users AS friends
+WHERE friends.first_name LIKE "Kermit" AND users.id = friendships.user_id AND friends.id = friendships.friend_id
+
+UNION
+
+SELECT friends.first_name, friends.last_name FROM users JOIN friendships JOIN users AS friends
+WHERE users.first_name LIKE "Kermit" AND users.id = friendships.user_id AND friends.id = friendships.friend_id;
+
+(2) I'm not sure what this is asking for, but 
+SELECT COUNT(*) FROM friendships	
+
+(3)
+SELECT first_name, last_name, COUNT(*) AS friend_count FROM
+    (SELECT friends.first_name, friends.last_name, users.first_name AS friend_name, users.last_name AS friend_last_name FROM users JOIN friendships JOIN users AS friends
+    WHERE users.id = friendships.user_id AND friends.id = friendships.friend_id
+    UNION
+    SELECT users.first_name, users.last_name, friends.first_name AS friend_name, friends.last_name AS friend_last_name FROM users JOIN friendships JOIN users AS friends
+    WHERE users.id = friendships.user_id AND friends.id = friendships.friend_id) as userfriend
+GROUP BY first_name, last_name ORDER BY COUNT(*) DESC;
+
+(4)
+INSERT INTO users(id, first_name, last_name, created_at, updated_at)
+VALUES (6, "El", "Pepe", NOW(), NOW());
+
+INSERT INTO friendships(id, user_id, friend_id, created_at, updated_at)
+VALUES
+(7, 6, 2, NOW(), NOW()),
+(8, 6, 4, NOW(), NOW()),
+(9, 6, 5, NOW(), NOW());
+
+(5)(SELECT users.first_name, users.last_name FROM users JOIN friendships JOIN users AS friends
+WHERE friends.first_name LIKE "Eli" AND users.id = friendships.user_id AND friends.id = friendships.friend_id
+
+UNION
+
+SELECT friends.first_name, friends.last_name FROM users JOIN friendships JOIN users AS friends
+WHERE users.first_name LIKE "Eli" AND users.id = friendships.user_id AND friends.id = friendships.friend_id)
+ORDER BY first_name ASC;
+
+(6)
+DELETE FROM friendships 
+WHERE 
+friendships.user_id = (SELECT id FROM users WHERE users.first_name LIKE "Eli") AND
+friendships.friend_id = (SELECT id FROM users WHERE users.first_name LIKE "Marky") AND friendships.friend_id = (SELECT id FROM users WHERE users.last_name LIKE "Mark")
+OR
+friendships.friend_id = (SELECT id FROM users WHERE users.first_name LIKE "Eli") AND
+friendships.user_id = (SELECT id FROM users WHERE users.first_name LIKE "Marky") AND friendships.user_id = (SELECT id FROM users WHERE users.last_name LIKE "Mark");
+
+(7)
+SELECT users.first_name, users.last_name, users2.first_name AS friend_first_name, users2.last_name AS friend_last_name FROM users 
+JOIN friendships JOIN users AS users2 WHERE users.id = friendships.user_id AND friendships.friend_id = users2.id;
